@@ -18,6 +18,14 @@ export interface Options {
 }
 
 export interface PaginationParams {
+    [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+    page: number;
+    perPage: number;
+}
+
+export interface Products {
+    items: Product[]
+    total: number;
     page: number;
     perPage: number;
 }
