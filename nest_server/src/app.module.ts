@@ -15,7 +15,7 @@ import { EmployeesModule } from './employees/employees.module';
       password: '',
       database: 'flower_shop_db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // Only for development. Should be false in production.
+      synchronize: false, // Only for development. Should be false in production.
     }),
     ProductsModule,
     EmployeesModule,

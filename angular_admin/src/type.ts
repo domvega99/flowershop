@@ -16,3 +16,52 @@ export interface Options {
         includeHeaders?: string[];
     } | boolean;
 }
+
+export interface PaginationParams {
+    page: number;
+    perPage: number;
+}
+
+export interface Product {
+  id: number;
+  product_name: string;
+  description: string;
+  slug: string;
+  product_code: string;
+  product_group: string;
+  sizes: Size[];
+  colors: Color[];
+  varieties: Variety[];
+  delivery_type: DeliveryType[];
+  retail_price: number;
+  retail_discount_price: number;
+  product_price: number;
+  cross_sell: number[];
+  photos: Photo[];
+}
+
+export interface Size {
+  id: number;
+  size_name: string;
+}
+
+export interface Color {
+  id: number;
+  color_name: string;
+}
+
+export interface Variety {
+  id: number;
+  variety_name: string;
+}
+
+export interface DeliveryType {
+  id: number;
+  delivery_type_name: string;
+}
+
+export interface Photo {
+  id: number;
+  file_name: string;
+  path_name: string;
+}
