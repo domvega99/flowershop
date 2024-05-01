@@ -24,7 +24,7 @@ export interface PaginationParams {
 }
 
 export interface Products {
-    items: Product[]
+    products: Product[]
     total: number;
     page: number;
     perPage: number;

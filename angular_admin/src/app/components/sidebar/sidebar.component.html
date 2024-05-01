@@ -1,1 +1,27 @@
-<p>sidebar works!</p>
+<div class="wrapper">
+    <div class="container">
+        <ul>
+            <li>
+                <p>HOME</p>
+                <a [routerLink]="['/']">
+                    <span>DASHBOARD</span>
+                </a>
+            </li>
+            <li>
+                <p>SALES</p>
+                <a [routerLink]="['/products/create']">
+                    <span>ORDERS</span>
+                </a>
+            </li>
+            <li>
+                <p>INVENTORY</p>
+                <a [routerLink]="['/products/create']">
+                    <span>CATALOGS</span>
+                </a>
+                <a [routerLink]="['/products']">
+                    <span>PRODUCTS</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

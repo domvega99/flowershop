@@ -17,7 +17,7 @@ export class ProductsController {
   async findAll(
     @Query('page') page: number = 1,
     @Query('perPage') perPage: number = 10,
-  ): Promise<{ total: number, products: Product[] }> {
+  ): Promise<{ products: Product[] }> {
     return this.productsService.findAll(page, perPage);
   }
 

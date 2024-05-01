@@ -17,13 +17,13 @@ export class ProductsService {
     return this.productRepository.save(product);
   }
 
-  async findAll(page: number = 1, perPage: number = 10): Promise<{ products: Product[], total: number }> {
+  async findAll(page: number = 1, perPage: number = 10): Promise<{ products: Product[] }> {
     const skip = (page - 1) * perPage;
-    const [products, total] = await this.productRepository.findAndCount({
+    const [products] = await this.productRepository.findAndCount({
       take: perPage,
       skip: skip,
     });
-    return { total, products };
+    return { products };
   }
 
   async findById(id: number): Promise<Product> {
