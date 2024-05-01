@@ -34,7 +34,8 @@ export class EmployeesService {
     return this.employeeRepository.save({ ...employee, ...employeeData });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number): Promise<void> {
+    const employee = await this.findById(id);
+    await this.employeeRepository.remove(employee);
   }
 }

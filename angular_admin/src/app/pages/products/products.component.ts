@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { Product } from '../../../type';
+import { Products } from '../../../type';
 
 @Component({
   selector: 'app-products',
@@ -15,7 +15,7 @@ export class ProductsComponent {
   ) {}
 
   ngOnInit() {
-    this.productService.getProducts('http://localhost:3000/products', {page: 0, perPage: 5}).subscribe((products: Product) => {
+    this.productService.getProducts('http://localhost:3000/products', {page: 0, perPage: 5}).subscribe((products: Products) => {
       console.log(products);
     })
   }
