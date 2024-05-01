@@ -22,7 +22,7 @@ export class ProductsComponent {
   products: Product[] = [];
 
   ngOnInit() {
-    this.productService.getProducts('http://localhost:3000/products', {page: 1, perPage: 0}).subscribe((product: Products) => {
+    this.productService.getProducts('https://friendly-burnell.74-208-7-200.plesk.page/products', {page: 1, perPage: 0}).subscribe((product: Products) => {
       this.products = product.products
       console.log(product.products);
       

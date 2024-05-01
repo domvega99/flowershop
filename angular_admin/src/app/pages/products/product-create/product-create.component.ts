@@ -24,13 +24,14 @@ export class ProductCreateComponent {
   ngOnInit() {
     // You can perform any HTTP initialization here
     // For example:
-    this.http.get<any>('http://localhost:3000/products').subscribe(data => {
+    this.http.get<any>('https://friendly-burnell.74-208-7-200.plesk.page/products').subscribe(data => {
       console.log(data);
     });
+    
   }
 
   onSubmit() {
-    this.http.post<any>('http://localhost:3000/products', this.formData)
+    this.http.post<any>('https://friendly-burnell.74-208-7-200.plesk.page/products', this.formData)
       .subscribe(
         response => {
           console.log(response);
