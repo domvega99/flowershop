@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button'
+import { ProductService } from '../../../services/product.service';
+import { Product, Products } from '../../../../type';
 
 @Component({
   selector: 'app-product-create',
@@ -19,27 +21,33 @@ export class ProductCreateComponent {
 
   formData: any = {};
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private productService: ProductService,
+    private http: HttpClient
+  ) {}
+
+  displayedColumns: string[] = ['Code', 'Name', 'Retail Price', 'Product Price'];
+  products: Product[] = [];
 
   ngOnInit() {
-    // You can perform any HTTP initialization here
-    // For example:
-    this.http.get<any>('https://friendly-burnell.74-208-7-200.plesk.page/products').subscribe(data => {
-      console.log(data);
-    });
+    
+    this.productService.getProducts('https://friendly-burnell.74-208-7-200.plesk.page/products', {page: 1, perPage: 0}).subscribe((product: Products) => {
+      this.products = product.products
+      console.log(product.products);
+    })
     
   }
 
   onSubmit() {
-    this.http.post<any>('https://friendly-burnell.74-208-7-200.plesk.page/products', this.formData)
+    this.http.post<Product>('https://friendly-burnell.74-208-7-200.plesk.page/products', this.formData)
       .subscribe(
         response => {
           console.log(response);
-          // handle success
+          // Handle success, maybe notify the user
         },
         error => {
           console.error(error);
-          // handle error
+          // Handle error, maybe notify the user
         }
       );
   }

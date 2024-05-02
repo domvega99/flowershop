@@ -16,4 +16,8 @@ export class ProductService {
       responseType: 'json',
     });
   }
+  
+  // addProduct = (url: string, body: any): Observable<any> => {
+  //   return this.apiService.post(url, body, {});
+  // }
 }
