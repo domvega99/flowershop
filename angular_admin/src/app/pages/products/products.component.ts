@@ -30,7 +30,7 @@ export class ProductsComponent {
 
   fetchProducts(page: number, perPage: number) {
     this.productService
-      .getProducts('https://florify.online/products', { page, perPage })
+      .getProducts('products', { page, perPage })
       .subscribe({
         next: (data: Products) => {
           this.products = data.products;
@@ -43,7 +43,7 @@ export class ProductsComponent {
   }
 
   editProduct(product: Product, id: number) {
-    this.productService.editProduct(`https://florify.online/products/${id}`, product).subscribe(
+    this.productService.editProduct(`products/${id}`, product).subscribe(
       {
         next: (data) => {
           console.log(data)
@@ -57,7 +57,7 @@ export class ProductsComponent {
   }
 
   deleteProduct(product: Product, id: number) {
-    this.productService.editProduct(`https://florify.online/products/${id}`, product).subscribe(
+    this.productService.editProduct(`products/${id}`, product).subscribe(
       {
         next: (data) => {
           console.log(data)
@@ -71,7 +71,7 @@ export class ProductsComponent {
   }
 
   addProduct(product: Product) {
-    this.productService.addProduct(`https://florify.online/products`, product).subscribe(
+    this.productService.addProduct(`products`, product).subscribe(
       {
         next: (data) => {
           console.log(data)

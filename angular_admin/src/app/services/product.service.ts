@@ -10,6 +10,7 @@ export class ProductService {
 
   constructor( private apiService: ApiService) { }
 
+
   getProducts = (url: string, params: PaginationParams): Observable<Products> => {
     return this.apiService.get(url, {
       params,

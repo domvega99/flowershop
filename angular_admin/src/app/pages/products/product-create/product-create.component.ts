@@ -29,7 +29,7 @@ export class ProductCreateComponent {
   }
 
   onSubmit() {
-    this.productService.addProduct(`https://florify.online/products`, this.formData).subscribe(
+    this.productService.addProduct(`products`, this.formData).subscribe(
       {
         next: (data) => {
           console.log(data)
