@@ -21,11 +21,6 @@ export class ProductsComponent {
   displayedColumns: string[] = ['Code', 'Name', 'Retail Price', 'Product Price'];
   products: Product[] = [];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
 
   totalRecords: number = 0;
   
@@ -35,21 +30,58 @@ export class ProductsComponent {
 
   fetchProducts(page: number, perPage: number) {
     this.productService
-      .getProducts('https://friendly-burnell.74-208-7-200.plesk.page/products', { page, perPage })
-      .subscribe((product: Products) => {
-        this.products = product.products;
-        this.totalRecords = 10;
-        console.log(product.products);
+      .getProducts('https://florify.online/products', { page, perPage })
+      .subscribe({
+        next: (data: Products) => {
+          this.products = data.products;
+          this.totalRecords = 10;
+        },
+        error: (error) => {
+          console.log(error);
+        }
       })
-
   }
 
-  editProduct(product: Product) {
-    console.log(product, 'Edit');
+  editProduct(product: Product, id: number) {
+    this.productService.editProduct(`https://florify.online/products/${id}`, product).subscribe(
+      {
+        next: (data) => {
+          console.log(data)
+          this.fetchProducts(1, 10);
+        },
+        error: (error) => {
+          console.log(error)
+        },
+      }
+    );
+  }
+
+  deleteProduct(product: Product, id: number) {
+    this.productService.editProduct(`https://florify.online/products/${id}`, product).subscribe(
+      {
+        next: (data) => {
+          console.log(data)
+          this.fetchProducts(1, 10);
+        },
+        error: (error) => {
+          console.log(error)
+        },
+      }
+    );
   }
 
   addProduct(product: Product) {
-    console.log(product, 'Edit');
+    this.productService.addProduct(`https://florify.online/products`, product).subscribe(
+      {
+        next: (data) => {
+          console.log(data)
+          this.fetchProducts(1, 10);
+        },
+        error: (error) => {
+          console.log(error)
+        },
+      }
+    );
   }
 
   ngOnInit() {

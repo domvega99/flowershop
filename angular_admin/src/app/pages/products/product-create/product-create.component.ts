@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button'
 import { ProductService } from '../../../services/product.service';
-import { Product, Products } from '../../../../type';
 
 @Component({
   selector: 'app-product-create',
@@ -23,33 +22,23 @@ export class ProductCreateComponent {
 
   constructor(
     private productService: ProductService,
-    private http: HttpClient
   ) {}
 
-  displayedColumns: string[] = ['Code', 'Name', 'Retail Price', 'Product Price'];
-  products: Product[] = [];
-
   ngOnInit() {
-    
-    this.productService.getProducts('https://friendly-burnell.74-208-7-200.plesk.page/products', {page: 1, perPage: 0}).subscribe((product: Products) => {
-      this.products = product.products
-      console.log(product.products);
-    })
-    
+
   }
 
   onSubmit() {
-    this.http.post<Product>('https://friendly-burnell.74-208-7-200.plesk.page/products', this.formData)
-      .subscribe(
-        response => {
-          console.log(response);
-          // Handle success, maybe notify the user
+    this.productService.addProduct(`https://florify.online/products`, this.formData).subscribe(
+      {
+        next: (data) => {
+          console.log(data)
         },
-        error => {
-          console.error(error);
-          // Handle error, maybe notify the user
-        }
-      );
+        error: (error) => {
+          console.log(error)
+        },
+      }
+    );
   }
 
 }
