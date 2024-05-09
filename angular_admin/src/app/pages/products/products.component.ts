@@ -5,11 +5,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [RouterModule, MatTableModule, MatPaginator, MatPaginatorModule, MatButtonModule],
+  imports: [RouterModule, MatTableModule, MatPaginator, MatPaginatorModule, MatButtonModule, MatInputModule, MatIconModule, MatRippleModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.sass'
 })
