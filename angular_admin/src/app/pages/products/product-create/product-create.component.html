@@ -1,38 +1,125 @@
-<!-- <form (ngSubmit)="onSubmit()">
-    <input type="text" name="product_name" [(ngModel)]="formData.product_name" placeholder="Name">
-    <input type="email" name="product_code" [(ngModel)]="formData.product_code" placeholder="Email">
-    <button type="submit">Submit</button>
-</form> -->
+<div class="wrapper">
+    <form class="form-container" (ngSubmit)="onSubmit()">
+        <div class="header">
+            <div class="container">
+                <div class="title">
+                    <button [routerLink]="['/products']" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                        <mat-icon>arrow_back</mat-icon>
+                    </button>
+                    <h1>Product Detail</h1>
+                </div>
+                <button mat-raised-button color="primary" type="submit">Save</button>
+            </div>
+        </div>
+        <div class="content">
+            <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="tab-container">
+                <mat-tab label="Basic Info">
+                    <div class="form-content">
+                        <mat-form-field class="font-input">
+                            <mat-label>Name</mat-label>
+                            <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_name" required>
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Slug</mat-label>
+                            <input matInput placeholder="" name="slug" [(ngModel)]="formData.slug">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput placeholder="" name="description" [(ngModel)]="formData.description"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Meta Title</mat-label>
+                            <input matInput placeholder="" name="meta_title" [(ngModel)]="formData.meta_title">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Meta Description</mat-label>
+                            <textarea matInput placeholder="" name="meta_description" [(ngModel)]="formData.meta_description"></textarea>
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Inventory">
+                    <div class="form-content">
+                        <mat-form-field class="font-input">
+                            <mat-label>Code</mat-label>
+                            <input matInput placeholder="" name="product_code" [(ngModel)]="formData.product_code">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Group</mat-label>
+                            <input matInput placeholder="" name="product_group" [(ngModel)]="formData.product_group">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Size</mat-label>
+                            <input matInput placeholder="" name="sizes" [(ngModel)]="formData.sizes">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Colors</mat-label>
+                            <input matInput placeholder="" name="colors" [(ngModel)]="formData.colors">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Varities</mat-label>
+                            <input matInput placeholder="" name="varities" [(ngModel)]="formData.varities">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Delivery Type</mat-label>
+                            <input matInput placeholder="" name="delivery_type" [(ngModel)]="formData.delivery_type">
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Pricing">
+                    <div class="form-content">
+                        <mat-form-field class="font-input">
+                            <mat-label>Retail Price</mat-label>
+                            <input matInput placeholder="" type="number" name="retail_price" [(ngModel)]="formData.retail_price">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Retail Discount Price</mat-label>
+                            <input matInput placeholder="" type="number" name="retail_discount_price" [(ngModel)]="formData.retail_discount_price">
+                        </mat-form-field>
+                        <mat-form-field class="font-input">
+                            <mat-label>Florist Price (Product Price)</mat-label>
+                            <input matInput placeholder="" type="number" name="product_price" [(ngModel)]="formData.product_price">
+                        </mat-form-field>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Catalogs">
+                    <div class="form-content">
+                        Catalog
+                    </div>
+                </mat-tab>
+                <mat-tab label="Cross-Sell">
+                    <div class="form-content">
+                        Cross Sell
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </form>
+</div>
 
-<form class="example-form" (ngSubmit)="onSubmit()">
-    <mat-form-field class="example-full-width">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_name">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Code</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_code">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Group</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_group">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Description</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.description">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Product Price</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_price">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Retail Price</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.retail_price">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Retail Discount Price</mat-label>
-        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.retail_discount_price">
-    </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Save</button>
-</form>
 
+
+      <!-- <mat-form-field class="example-full-width">
+                        <mat-label>Code</mat-label>
+                        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_code">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Group</mat-label>
+                        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_group">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Description</mat-label>
+                        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.description">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Product Price</mat-label>
+                        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.product_price">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Retail Price</mat-label>
+                        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.retail_price">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Retail Discount Price</mat-label>
+                        <input matInput placeholder="" name="product_name" [(ngModel)]="formData.retail_discount_price">
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit">Save</button> -->
