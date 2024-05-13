@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
 import { EmployeesModule } from './employees/employees.module';
+import { TeamsModule } from './football/teams/teams.module';
 
 @Module({
   imports: [
@@ -11,14 +12,15 @@ import { EmployeesModule } from './employees/employees.module';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'root',
-      password: '',
+      username: 'flower_shop_root',
+      password: 'R!qx4453w',
       database: 'flower_shop_db',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: false, // Only for development. Should be false in production.
     }),
     ProductsModule,
     EmployeesModule,
+    TeamsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
