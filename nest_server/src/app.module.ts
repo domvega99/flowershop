@@ -4,7 +4,12 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
 import { EmployeesModule } from './employees/employees.module';
+<<<<<<< HEAD
 import { TeamsModule } from './football/teams/teams.module';
+=======
+import { PagesModule } from './pages/pages.module';
+import { UploadModule } from './upload/upload.module';
+>>>>>>> 8e665ca761c395d6c30cb95b42ddefde79a10c46
 
 @Module({
   imports: [
@@ -20,7 +25,12 @@ import { TeamsModule } from './football/teams/teams.module';
     }),
     ProductsModule,
     EmployeesModule,
+<<<<<<< HEAD
     TeamsModule,
+=======
+    PagesModule,
+    UploadModule,
+>>>>>>> 8e665ca761c395d6c30cb95b42ddefde79a10c46
   ],
   controllers: [AppController],
   providers: [AppService],
