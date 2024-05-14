@@ -13,4 +13,7 @@ export class Team {
 
     @Column()
     place: string;
+
+    @Column()
+    file_name: string;
 }

@@ -9,8 +9,8 @@ export class TeamsController {
   constructor(private readonly teamsService: TeamsService) {}
   
   @Post()
-  async create(@Body() employeeData: Partial<Team>): Promise<Team> {
-    return this.teamsService.create(employeeData);
+  async create(@Body() teamData: Partial<Team>): Promise<Team> {
+    return this.teamsService.create(teamData);
   }
 
   @Get()
@@ -26,9 +26,9 @@ export class TeamsController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() employeeData: Partial<Team>,
+    @Body() teamData: Partial<Team>,
   ): Promise<Team> {
-    return this.teamsService.update(parseInt(id, 10), employeeData);
+    return this.teamsService.update(parseInt(id, 10), teamData);
   }
   
   @Delete(':id')

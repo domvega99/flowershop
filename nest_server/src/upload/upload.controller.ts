@@ -9,23 +9,19 @@ import { extname } from 'path';
 @Controller('upload')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
+
   @Post('image')
   @UseInterceptors(FileInterceptor('image', {
     storage: diskStorage({
-      destination: 'src/uploads',
+      destination: './uploads',
       filename: (req, file, callback) => {
-        const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-        callback(null, `${randomName}${extname(file.originalname)}`);
-      }
-    })
+        const originalName = file.originalname;
+        return callback(null, originalName);
+      },
+    }),
   }))
-  uploadFile(@UploadedFile() file) {
-    return { url: `http://localhost:3000/${file.path}` };
-  }
-
-  @Post()
-  create(@Body() createUploadDto: CreateUploadDto) {
-    return this.uploadService.create(createUploadDto);
+  async uploadImage(@UploadedFile() file) {
+    return { imagePath: file.path };
   }
 
   @Get()
