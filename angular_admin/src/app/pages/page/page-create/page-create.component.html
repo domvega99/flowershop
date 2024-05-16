@@ -1,25 +1,7 @@
-<!-- <editor
-  [(ngModel)]="html"
-  apiKey="70vrbl8st9r067g3hqehvzf5b8kz7suaz19aov9yivkv3emy"
-  [init]="{ 
-    plugins: 'lists link image table code help wordcount',
-    base_url: '/tinymce', 
-    file_picker_types: 'file image media',
-    images_upload_url: 'src/uploads', 
-    toolbar: 'image',
-    images_file_types: 'jpg,svg,webp,png',
-    automatic_uploads: true, 
-    images_reuse_filename: true,
-    suffix: '.min',
-    file_picker_callback: filePickerCallback,
-  }">
-</editor> -->
-<editor
-[(ngModel)]="html"
-      [init]="config"
-    ></editor>
+<editor [(ngModel)]="html" [init]="config"></editor>
 
 <button (click)="retrieveHtml()">Retrieve HTML</button>
-<div [innerHTML]="html"></div>
-<!-- <h1>TinyMCE 6 Angular Demo</h1>
-<editor apiKey="api key here" [init]="config" [(ngModel)]="source"></editor> -->
+
+<div class="wrapper">
+  <div [innerHTML]="html"></div>
+</div>

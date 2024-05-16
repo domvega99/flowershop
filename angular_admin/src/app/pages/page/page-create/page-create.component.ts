@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { EditorComponent, EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../../../services/api.service';
 declare var tinymce: any;
 
 @Component({
@@ -20,65 +21,80 @@ export class PageCreateComponent {
   editor: any;
   imageData: string = ''
 
-  constructor( private http: HttpClient) { }
+  constructor( 
+    private http: HttpClient,
+    private _configService: ApiService
+  ) { }
 
-  config: EditorComponent['init'] = {
-    plugins: 'lists link image table code help wordcount',
-    base_url: '/tinymce', 
-    file_picker_types: 'file image media',
-    images_upload_url: 'http://localhost:3000/upload/image', 
-    toolbar: 'image',
-    images_file_types: 'jpg,svg,webp,png',
-    automatic_uploads: true, 
-    images_reuse_filename: true,
-    suffix: '.min',
-    paste_data_images: true,
-    file_picker_callback: this.filePickerCallback,
-    images_upload_handler: this.uploadImage,
+  config: EditorComponent['init'];
+  ngOnInit() {
+    this.config = {
+      plugins: 'lists link image table code help wordcount',
+      base_url: '/tinymce',
+      file_picker_types: 'file image media',
+      images_upload_url: '',
+      toolbar: 'image',
+      images_file_types: 'jpg,svg,webp,png',
+      automatic_uploads: true,
+      images_reuse_filename: true,
+      suffix: '.min',
+      paste_data_images: true,
+      images_upload_credentials: true,
+      images_upload_base_path: '',
+      file_picker_callback: this.filePickerCallback.bind(this),
+      images_upload_handler: this.uploadImage.bind(this)
+    };
   }
 
   uploadImage(blobInfo: any): Promise<string> {
     return new Promise((resolve, reject) => {
+      if (!blobInfo || typeof blobInfo.blob !== 'function' || typeof blobInfo.filename !== 'function') {
+        reject('Invalid blobInfo object');
+        return;
+      }
+      
       const formData = new FormData();
       formData.append('image', blobInfo.blob(), blobInfo.filename());
-      this.http.post('http://localhost:3000/upload/image', formData).subscribe(
+      const uploadUrl = `${this._configService.UPLOAD_IMAGE_API}`;
+      this.http.post(uploadUrl, formData).subscribe(
         (data: any) => {
-          // Assuming the server responds with the URL of the uploaded image
-          const imageUrl = data.imageUrl;
-          resolve(imageUrl);
+          if (data && data.imagePath) {
+            const imageUrl = `${this._configService.PATH_IMAGE}${data.imagePath}`;
+            resolve(imageUrl);
+          } else {
+            reject(`Failed to upload image: Unexpected response format - ${JSON.stringify(data)}`);
+          }
         },
         (error) => {
-          reject('Failed to upload image');
+          if (error.status === 0) {
+            reject('Failed to upload image: Network error');
+          } else if (error.error && error.error.message) {
+            reject(`Failed to upload image: ${error.error.message}`);
+          } else {
+            reject('Failed to upload image: Unknown error');
+          }
         }
       );
     });
-}
+  }
 
   filePickerCallback(callback: any) {
     const input = document.createElement('input');
         input.setAttribute('type', 'file');
         input.setAttribute('accept', 'image/*');
-
         input.addEventListener('change', (e: any) => {
           const file = e.target.files[0];
 
           const reader = new FileReader();
           reader.addEventListener('load', () => {
-            if (typeof reader.result === 'string') { // Check if result is a string
-              /*
-                Note: Now we need to register the blob in TinyMCEs image blob
-                registry. In the next release this part hopefully won't be
-                necessary, as we are looking to handle it internally.
-              */
-              const id = 'blobid' + (new Date()).getTime();
+            if (typeof reader.result === 'string') { 
+              const id = '' + (new Date()).getTime();
               const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-              const base64 = (reader.result as string).split(',')[1]; // Cast result to string
+              const base64 = (reader.result as string).split(',')[1]; 
               const blobInfo = blobCache.create(id, file, base64);
               blobCache.add(blobInfo);
 
-              /* call the callback and populate the Title field with the file name */
               callback(blobInfo.blobUri(), { title: file.name });
-
             }
           });
           reader.readAsDataURL(file);
@@ -88,7 +104,7 @@ export class PageCreateComponent {
   }
 
 
-  html = '<p>Hi, TinyMCE!</p>';
+  html = '';
   retrieveHtml() {
     console.log(this.html);
   }

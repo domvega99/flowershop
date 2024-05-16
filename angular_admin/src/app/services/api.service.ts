@@ -7,6 +7,8 @@ import { Options, Product } from '../../type';
   providedIn: 'root'
 })
 export class ApiService {
+  public readonly PATH_IMAGE = 'https://florify.online/';
+  public readonly UPLOAD_IMAGE_API = 'https://florify.online/upload/image/';
 
   constructor( private httpClient: HttpClient) { }
 
