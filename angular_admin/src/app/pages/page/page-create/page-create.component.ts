@@ -5,12 +5,14 @@ import { EditorComponent, EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tiny
 import { NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../../../services/api.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
 declare var tinymce: any;
 
 @Component({
   selector: 'app-page-create',
   standalone: true,
-  imports: [EditorModule, CommonModule, FormsModule],
+  imports: [EditorModule, CommonModule, FormsModule, MatButtonModule],
   templateUrl: './page-create.component.html',
   styleUrl: './page-create.component.sass',
   providers: [
@@ -19,31 +21,46 @@ declare var tinymce: any;
 })
 export class PageCreateComponent {
   editor: any;
-  imageData: string = ''
+  imageData: string = '';
+  content: SafeHtml = '';
+  html: string = ''
 
   constructor( 
     private http: HttpClient,
-    private _configService: ApiService
+    private _configService: ApiService,
+    private sanitizer: DomSanitizer
   ) { }
 
   config: EditorComponent['init'];
   ngOnInit() {
     this.config = {
+      apiKey: "70vrbl8st9r067g3hqehvzf5b8kz7suaz19aov9yivkv3emy",
+      promotion: false,
       plugins: 'lists link image table code help wordcount',
+      toolbar: 'undo redo | formatselect | bold italic backcolor forecolor | blocks \
+                alignleft aligncenter alignright alignjustify | \
+                bullist numlist outdent indent | removeformat | help | image',
       base_url: '/tinymce',
       file_picker_types: 'file image media',
+      help_accessibility: false,
       images_upload_url: '',
-      toolbar: 'image',
       images_file_types: 'jpg,svg,webp,png',
+      statusbar: false,
       automatic_uploads: true,
       images_reuse_filename: true,
+      image_title: true,
       suffix: '.min',
       paste_data_images: true,
       images_upload_credentials: true,
       images_upload_base_path: '',
+      license_key: 'gpl',
       file_picker_callback: this.filePickerCallback.bind(this),
-      images_upload_handler: this.uploadImage.bind(this)
+      images_upload_handler: this.uploadImage.bind(this),
     };
+  }
+
+  onEditorContentChange(event: any) {
+    this.content = this.sanitizer.bypassSecurityTrustHtml(event.editor.getContent());
   }
 
   uploadImage(blobInfo: any): Promise<string> {
@@ -52,7 +69,6 @@ export class PageCreateComponent {
         reject('Invalid blobInfo object');
         return;
       }
-      
       const formData = new FormData();
       formData.append('image', blobInfo.blob(), blobInfo.filename());
       const uploadUrl = `${this._configService.UPLOAD_IMAGE_API}`;
@@ -104,9 +120,8 @@ export class PageCreateComponent {
   }
 
 
-  html = '';
   retrieveHtml() {
-    console.log(this.html);
+    console.log(this.content);
   }
 
 }
